@@ -46,6 +46,7 @@ modules:
       #  will be installed and set up
     custom-flatpaks: # this section is optional
       - Zoom: flathub us.zoom.Zoom
+      - Endless Sky: flathub io.github.endless_sky.endless_sky
       # - Celluloid: io.github.celluloid_player.Celluloid
       # - Krita: org.kde.krita
 
