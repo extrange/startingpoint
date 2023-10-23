@@ -47,6 +47,7 @@ modules:
     custom-flatpaks: # this section is optional
       - Zoom: flathub us.zoom.Zoom
       - Endless Sky: flathub io.github.endless_sky.endless_sky
+      - Heroes 2: flathub io.github.ihhub.Fheroes2
       # - Celluloid: io.github.celluloid_player.Celluloid
       # - Krita: org.kde.krita
 
