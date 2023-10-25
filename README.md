@@ -8,9 +8,6 @@ The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is t
 
 ## Changes from stock Fedora Silverblue
 
-From [`ublue-os/main`]:
-
-- Hardware acceleration and codecs
 - `systemd` timers for automatic Flatpak and `rpm-ostree` updates
 - removes the default Firefox package (Flatpak Firefox has better [codec support])
 - layers [additional packages] e.g. `ffmpeg`, `libheif-tools`, `fzf`, `distrobox`, `vim`, `tmux`
