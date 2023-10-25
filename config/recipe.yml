@@ -24,33 +24,31 @@ modules:
   - type: rpm-ostree
     repos:
       - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+      - https://copr.fedorainfracloud.org/coprs/alternateved/keyd/repo/fedora-%OS_VERSION%/alternateved-keyd-fedora-%OS_VERSION%.repo
     install:
       - tailscale
+      - gnome-tweaks
+      - syncthing
+      - keyd # Key remapping daemon
     remove:
       - firefox # default firefox removed in favor of flatpak
       - firefox-langpacks # langpacks needs to also be removed to prevent dependency problems
+  
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
 
-  - type: bling # configure what to pull in from ublue-os/bling
-    install:
-      - justfiles # add "!include /usr/share/ublue-os/just/bling.just"
-        # in your custom.just (added by default) or local justfile
-      - ublue-os-wallpapers
-      # - ublue-update # https://github.com/ublue-os/ublue-update
-      # - dconf-update-service # a service unit that updates the dconf db on boot
-      # - devpod # https://devpod.sh/ as an rpm
+  # - type: bling # configure what to pull in from ublue-os/bling
+  #   install:
+  #     - ublue-update # https://github.com/ublue-os/ublue-update
+  #     - dconf-update-service # a service unit that updates the dconf db on boot
+  #     - devpod # https://devpod.sh/ as an rpm
 
-  - type:
-      yafti # if included, yafti and it's dependencies (pip & libadwaita)
-      #  will be installed and set up
-    custom-flatpaks: # this section is optional
-      - Zoom: flathub us.zoom.Zoom
-      - Endless Sky: flathub io.github.endless_sky.endless_sky
-      - Heroes 2: flathub io.github.ihhub.Fheroes2
-      # - Celluloid: io.github.celluloid_player.Celluloid
-      # - Krita: org.kde.krita
+  - type: yafti
+  # flatpaks are directly specified in yafti.yml
 
   - type: script
     scripts:
-      - starship.sh
-      # this sets up the proper policy & signing files for signed images to work
-      - signing.sh
+      - enable-syncthing.sh
+      - starship.sh # starship.rs shell prompt

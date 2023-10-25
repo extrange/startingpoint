@@ -4,7 +4,7 @@
 # Only the branch called `live` is published.
 
 
-name: build-ublue
+name: build
 on: # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
   schedule:
     - cron: "20 22 * * *"
@@ -50,8 +50,7 @@ jobs:
           remove-android: 'true'
           remove-haskell: 'true'
 
-      # Checkout push-to-registry action GitHub repository
-      - name: Checkout Push to Registry action
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Add yq (for reading recipe.yml)

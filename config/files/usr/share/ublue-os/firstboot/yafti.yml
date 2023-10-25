@@ -86,15 +86,22 @@ screens:
             - Flatseal (Permission Manager): com.github.tchx84.Flatseal
             - Font Downloader: org.gustavoperedo.FontDownloader
             - Mozilla Firefox: org.mozilla.firefox
-        Web Browsers:
-          description: Additional browsers to complement or replace Firefox.
-          default: false
+        Custom:
+          description: Additional applications I use
+          default: True
           packages:
-            - Brave: com.brave.Browser
-            - GNOME Web: org.gnome.Epiphany
-            - Google Chrome: com.google.Chrome
-            - Microsoft Edge: com.microsoft.Edge
-            - Opera: com.opera.Opera
+            - Calibre: com.calibre_ebook.calibre
+            - LibreOffice: org.libreoffice.LibreOffice
+            - Obsidian: md.obsidian.Obsidian
+            - Scrcpy: in.srev.guiscrcpy
+            - Telegram: org.telegram.desktop
+            - VLC: org.videolan.VLC
+            - Zoom: flathub us.zoom.Zoom
+            - OBS Studio: com.obsproject.Studio
+            - Jellyfin: com.github.iwalton3.jellyfin-media-player
+            - Moonlight: com.moonlight_stream.Moonlight
+            - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
+            
         Gaming:
           description: "Rock and Stone!"
           default: false
@@ -107,25 +114,6 @@ screens:
             - MangoHUD (Utility): org.freedesktop.Platform.VulkanLayer.MangoHud//22.08
             - SteamTinkerLaunch (Utility): com.valvesoftware.Steam.Utility.steamtinkerlaunch
             - Proton Updater for Steam: net.davidotek.pupgui2
-        Office:
-          description: Boost your productivity.
-          default: false
-          packages:
-            - LibreOffice: org.libreoffice.LibreOffice
-            - OnlyOffice: org.onlyoffice.desktopeditors
-            - Obsidian: md.obsidian.Obsidian
-            - Slack: com.slack.Slack
-            - Standard Notes: org.standardnotes.standardnotes
-            - Thunderbird Email: org.mozilla.Thunderbird
-        Streaming:
-          description: Stream to the Internet.
-          default: false
-          packages:
-            - OBS Studio: com.obsproject.Studio
-            - VkCapture for OBS: com.obsproject.Studio.OBSVkCapture
-            - Gstreamer for OBS: com.obsproject.Studio.Plugin.Gstreamer
-            - Gstreamer VAAPI for OBS: com.obsproject.Studio.Plugin.GStreamerVaapi
-            - Boatswain for Streamdeck: com.feaneron.Boatswain
 
   final-screen:
     source: yafti.screen.title

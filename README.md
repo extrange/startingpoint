@@ -1,6 +1,8 @@
 # My OS in a container
 
-Custom OS with personalization, based off [Fedora Silverblue], an immutable variant of Fedora. Uses [Universal Blue's `startingpoint`][startingpoint] repository template.
+Custom OS with personalization, based off [Fedora Silverblue], an immutable variant of Fedora. Uses [Universal Blue's `startingpoint`][startingpoint] repository template. Written in OCI
+
+Inspired by this [post].
 
 [![build]][build-yml]
 
@@ -12,6 +14,7 @@ The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is t
 - removes the default Firefox package (Flatpak Firefox has better [codec support])
 - layers [additional packages] e.g. `ffmpeg`, `libheif-tools`, `fzf`, `distrobox`, `vim`, `tmux`
 
+The main files which are not changed from upstream `startingpoint` are `build.sh`.
 
 
 ## Getting started
@@ -110,3 +113,4 @@ See [the just-page in the Universal Blue documentation](https://universal-blue.o
 [`ublue-os/main`]: https://universal-blue.org/images/main/#features
 [codec support]: https://docs.fedoraproject.org/en-US/fedora-silverblue/faq/#_how_can_i_play_more_videos_in_firefox_like_youtube
 [additional packages]: https://github.com/ublue-os/main/blob/main/packages.json
+[post]: https://www.ypsidanger.com/building-your-own-fedora-silverblue-image/
