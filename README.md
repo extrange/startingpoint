@@ -1,15 +1,21 @@
-# Starting point
+# My OS in a container
 
-> **Warning**
-> Startingpoint was recently rewritten, and this version is considered a "1.0" *semi-*stable release.
-> There are breaking changes between this and the previous version.
-> If you are merging changes from the previous (v0) version, please refer to [the heads-up blog post](https://universal-blue.org/blog/2023/09/02/startingpoint-rewrite-heads-up-what-you-need-to-know/).
+Custom OS with personalization, based off [Fedora Silverblue], an immutable variant of Fedora. Uses [Universal Blue's `startingpoint`][startingpoint] repository template.
 
-[![build-ublue](https://github.com/ublue-os/startingpoint/actions/workflows/build.yml/badge.svg)](https://github.com/ublue-os/startingpoint/actions/workflows/build.yml)
+[![build]][build-yml]
 
-This is a constantly updating template repository for creating [a native container image](https://fedoraproject.org/wiki/Changes/OstreeNativeContainerStable) designed to be customized however you want. GitHub will build your image for you, and then host it for you on [ghcr.io](https://github.com/features/packages). You then just tell your computer to boot off of that image. GitHub keeps 90 days worth image backups for you, thanks Microsoft!
+The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is then pulled automatically by all my machines using this OS.
 
-For more info, check out the [uBlue homepage](https://universal-blue.org/) and the [main uBlue repo](https://github.com/ublue-os/main/)
+## Changes from stock Fedora Silverblue
+
+From [`ublue-os/main`]:
+
+- Hardware acceleration and codecs
+- `systemd` timers for automatic Flatpak and `rpm-ostree` updates
+- removes the default Firefox package (Flatpak Firefox has better [codec support])
+- layers [additional packages] e.g. `ffmpeg`, `libheif-tools`, `fzf`, `distrobox`, `vim`, `tmux`
+
+
 
 ## Getting started
 
@@ -23,7 +29,7 @@ After setup, it is recommended you update this README to describe your custom im
 > Everywhere in this repository, make sure to replace `ublue-os/startingpoint` with the details of your own repository. Unless you used one of the automatic repository setup tools in which case the previous repo identifier should already be your repo's details.
 
 > **Warning**
-> To start, you *must* create a branch called `live` which is exclusively for your customizations. That is the **only** branch the GitHub workflow will deploy to your container registry. Don't make any changes to the original "template" branch. It should remain untouched. By using this branch structure, you ensure a clear separation between your own "published image" branch, your development branches, and the original upstream "template" branch. Periodically sync and fast-forward the upstream "template" branch to the most recent revision. Then, simply rebase your `live` branch onto the updated template to effortlessly incorporate the latest improvements into your own repository, without the need for any messy, manual "merge commits".
+> To start, you _must_ create a branch called `live` which is exclusively for your customizations. That is the **only** branch the GitHub workflow will deploy to your container registry. Don't make any changes to the original "template" branch. It should remain untouched. By using this branch structure, you ensure a clear separation between your own "published image" branch, your development branches, and the original upstream "template" branch. Periodically sync and fast-forward the upstream "template" branch to the most recent revision. Then, simply rebase your `live` branch onto the updated template to effortlessly incorporate the latest improvements into your own repository, without the need for any messy, manual "merge commits".
 
 ## Customization
 
@@ -34,13 +40,13 @@ If you want to add custom configuration files, you can just add them in the `/us
 For more information about customization, see [the README in the config directory](config/README.md)
 
 Documentation around making custom images exists / should be written in two separate places:
-* [The Tinkerer's Guide on the website](https://universal-blue.org/tinker/make-your-own/) for general documentation around making custom images, best practices, tutorials, and so on.
-* Inside this repository for documentation specific to the ins and outs of the template (like module documentation), and just some essential guidance on how to make custom images.
+
+- [The Tinkerer's Guide on the website](https://universal-blue.org/tinker/make-your-own/) for general documentation around making custom images, best practices, tutorials, and so on.
+- Inside this repository for documentation specific to the ins and outs of the template (like module documentation), and just some essential guidance on how to make custom images.
 
 ## Installation
 
-> **Warning**
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable) and should not be used in production, try it in a VM for a while!
+> **Warning** > [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable) and should not be used in production, try it in a VM for a while!
 
 To rebase an existing Silverblue/Kinoite installation to the latest build:
 
@@ -73,7 +79,7 @@ The `latest` tag will automatically point to the latest build. That build will s
 
 ## ISO
 
-This template includes a simple Github Action to build and release an ISO of your image. 
+This template includes a simple Github Action to build and release an ISO of your image.
 
 To run the action, simply edit the `boot_menu.yml` by changing all the references to startingpoint to your repository. This should trigger the action automatically.
 
@@ -86,13 +92,24 @@ Note that this release-iso action is not a replacement for a full-blown release 
 The [`just`](https://just.systems/) command runner is included in all `ublue-os/main`-derived images.
 
 You need to have a `~/.justfile` with the following contents and `just` aliased to `just --unstable` (default in posix-compatible shells on ublue) to get started with just locally.
+
 ```
 !include /usr/share/ublue-os/just/main.just
 !include /usr/share/ublue-os/just/nvidia.just
 !include /usr/share/ublue-os/just/custom.just
 ```
+
 Then type `just` to list the just recipes available.
 
 The file `/usr/share/ublue-os/just/custom.just` is intended for the custom just commands (recipes) you wish to include in your image. By default, it includes the justfiles from [`ublue-os/bling`](https://github.com/ublue-os/bling), if you wish to disable that, you need to just remove the line that includes bling.just.
 
 See [the just-page in the Universal Blue documentation](https://universal-blue.org/guide/just/) for more information.
+
+[startingpoint]: https://github.com/ublue-os/startingpoint
+[build]: https://github.com/extrange/startingpoint/actions/workflows/build.yml/badge.svg
+[build-yml]: https://github.com/extrange/startingpoint/actions/workflows/build.yml
+[Github Actions]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions
+[Fedora Silverblue]: https://fedoraproject.org/silverblue/
+[`ublue-os/main`]: https://universal-blue.org/images/main/#features
+[codec support]: https://docs.fedoraproject.org/en-US/fedora-silverblue/faq/#_how_can_i_play_more_videos_in_firefox_like_youtube
+[additional packages]: https://github.com/ublue-os/main/blob/main/packages.json
