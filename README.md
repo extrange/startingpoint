@@ -21,6 +21,7 @@ The main files which are not changed from upstream `startingpoint` are `build.sh
 > [!IMPORTANT]
 > Before installing anything, you will need to back up your existing:
 > 
+> - `~/.ssh` keys
 > - Firefox profile
 > - `nm-cli` connections
 > - `fstab`

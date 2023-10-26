@@ -20,6 +20,7 @@ on: # https://docs.github.com/en/actions/using-workflows/events-that-trigger-wor
 
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  TZ: 'Asia/Singapore'
 
 # Only deploys the branch named "live". Ignores all other branches, to allow
 # having "development" branches without interfering with GHCR image uploads.
