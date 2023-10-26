@@ -24,6 +24,7 @@ modules:
   - type: rpm-ostree
     repos:
       - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+      # TODO remove
       - https://copr.fedorainfracloud.org/coprs/alternateved/keyd/repo/fedora-%OS_VERSION%/alternateved-keyd-fedora-%OS_VERSION%.repo
     install:
       - tailscale
@@ -51,3 +52,4 @@ modules:
   - type: script
     scripts:
       - starship.sh # starship.rs shell prompt
+      - rpm-ostree-update.sh # automatic updates
