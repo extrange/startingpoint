@@ -1,5 +1,0 @@
-Git
-Syncthing
-Firefox profile
-Network connections
-fstab

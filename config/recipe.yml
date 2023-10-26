@@ -50,5 +50,4 @@ modules:
 
   - type: script
     scripts:
-      - enable-syncthing.sh
       - starship.sh # starship.rs shell prompt

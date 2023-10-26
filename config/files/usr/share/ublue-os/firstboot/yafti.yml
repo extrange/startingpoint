@@ -1,11 +1,11 @@
-title: Welcome to uBlue
+title: Welcome
 properties:
   mode: "run-on-change"
 screens:
   first-screen:
     source: yafti.screen.title
     values:
-      title: "Welcome to uBlue (Alpha)"
+      title: "Welcome to your custom OS"
       icon: "/path/to/icon"
       description: |
         This guided installer will help you get started with your new system.
@@ -16,7 +16,11 @@ screens:
       condition:
         run: flatpak remotes --columns=name | grep fedora
       description: |
-        We have detected the limited, Fedora-provided Flatpak remote on your system, whose applications are usually missing important codecs and other features. This step will therefore remove all basic Fedora Flatpaks from your system! We will instead switch all core Flatpak applications over to the vastly superior, unfiltered Flathub. If you don't want to do this, simply exit this installer.
+        We have detected the limited, Fedora-provided Flatpak remote on your system, whose applications are usually missing important codecs and other features.
+
+        This step will therefore remove all basic Fedora Flatpaks from your system. We will instead switch all core Flatpak applications over to the vastly superior, unfiltered Flathub.
+
+        If you don't want to do this, simply exit this installer.
       actions:
         - run: flatpak remote-delete --system --force fedora
         - run: flatpak remote-delete --user --force fedora
@@ -101,7 +105,7 @@ screens:
             - Jellyfin: com.github.iwalton3.jellyfin-media-player
             - Moonlight: com.moonlight_stream.Moonlight
             - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
-            
+
         Gaming:
           description: "Rock and Stone!"
           default: false

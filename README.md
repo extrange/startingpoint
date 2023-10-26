@@ -8,7 +8,7 @@ Inspired by this [post].
 
 The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is then pulled automatically by all my machines using this OS.
 
-## Changes from stock Fedora Silverblue
+**Changes from stock Fedora Silverblue**
 
 - `systemd` timers for automatic Flatpak and `rpm-ostree` updates
 - removes the default Firefox package (Flatpak Firefox has better [codec support])
@@ -16,61 +16,55 @@ The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is t
 
 The main files which are not changed from upstream `startingpoint` are `build.sh`.
 
-
-## Getting started
-
-See the [Make Your Own-page in the documentation](https://universal-blue.org/tinker/make-your-own/) for quick setup instructions for setting up your own repository based on this template.
-
-Don't worry, it only requires some basic knowledge about using the terminal and git.
-
-After setup, it is recommended you update this README to describe your custom image.
-
-> **Note**
-> Everywhere in this repository, make sure to replace `ublue-os/startingpoint` with the details of your own repository. Unless you used one of the automatic repository setup tools in which case the previous repo identifier should already be your repo's details.
-
-> **Warning**
-> To start, you _must_ create a branch called `live` which is exclusively for your customizations. That is the **only** branch the GitHub workflow will deploy to your container registry. Don't make any changes to the original "template" branch. It should remain untouched. By using this branch structure, you ensure a clear separation between your own "published image" branch, your development branches, and the original upstream "template" branch. Periodically sync and fast-forward the upstream "template" branch to the most recent revision. Then, simply rebase your `live` branch onto the updated template to effortlessly incorporate the latest improvements into your own repository, without the need for any messy, manual "merge commits".
-
-## Customization
-
-The easiest way to start customizing is by looking at and modifying `config/recipe.yml`. It's documented using comments and should be pretty easy to understand.
-
-If you want to add custom configuration files, you can just add them in the `/usr/etc/` directory, which is the official OSTree "configuration template" directory and will be applied to `/etc/` on boot. `config/files/usr` is copied into your image's `/usr` by default. If you need to add other directories in the root of your image, that can be done using the `files` module. Writing to `/var/` in the image builds of OSTree-based distros isn't supported and will not work, as that is a local user-managed directory!
-
-For more information about customization, see [the README in the config directory](config/README.md)
-
-Documentation around making custom images exists / should be written in two separate places:
-
-- [The Tinkerer's Guide on the website](https://universal-blue.org/tinker/make-your-own/) for general documentation around making custom images, best practices, tutorials, and so on.
-- Inside this repository for documentation specific to the ins and outs of the template (like module documentation), and just some essential guidance on how to make custom images.
-
 ## Installation
 
-> **Warning** > [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable) and should not be used in production, try it in a VM for a while!
+> [!IMPORTANT]
+> Before installing anything, you will need to back up your existing:
+> 
+> - Firefox profile
+> - `nm-cli` connections
+> - `fstab`
+> - Syncthing configuration
+
+**Install**
 
 To rebase an existing Silverblue/Kinoite installation to the latest build:
 
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/ublue-os/startingpoint:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/ublue-os/startingpoint:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
+```bash
+# First rebase to the unsigned image, to get the proper signing keys and policies installed:
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/extrange/startingpoint:latest
+
+# Reboot to complete the rebase:
+reboot
+
+# Then rebase to the signed image, like so:
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/extrange/startingpoint:latest
+
+# Reboot again to complete the installation
+reboot
+```
+
+**Post install setup**
+
+You will need to configure:
+
+- `git` credentials
+- `syncthing` is installed but not enable by default. To enable:
+
+  - `systemctl --user enable syncthing.service`
+
+Finally, don't forget to copy over the configuration files you backed up previously.
+
+## Notes
+
+The `template` branch tracks that of the upstream [`startingpoint`][startingpoint] repo. The `live` branch is used for actual deployment.
+
+The `template` branch is periodically synced and the `live` branch is rebased on it periodically to incorporate the latest improvements without the need for any messy, manual "merge commits".
 
 This repository builds date tags as well, so if you want to rebase to a particular day's build:
 
-```
-sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/ublue-os/startingpoint:20230403
+```bash
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/extrange/startingpoint:20230403
 ```
 
 This repository by default also supports signing.
@@ -87,30 +81,15 @@ The Action uses [isogenerator](https://github.com/ublue-os/isogenerator) and wor
 
 Note that this release-iso action is not a replacement for a full-blown release automation like [release-please](https://github.com/googleapis/release-please).
 
-## `just`
+## References
 
-The [`just`](https://just.systems/) command runner is included in all `ublue-os/main`-derived images.
-
-You need to have a `~/.justfile` with the following contents and `just` aliased to `just --unstable` (default in posix-compatible shells on ublue) to get started with just locally.
-
-```
-!include /usr/share/ublue-os/just/main.just
-!include /usr/share/ublue-os/just/nvidia.just
-!include /usr/share/ublue-os/just/custom.just
-```
-
-Then type `just` to list the just recipes available.
-
-The file `/usr/share/ublue-os/just/custom.just` is intended for the custom just commands (recipes) you wish to include in your image. By default, it includes the justfiles from [`ublue-os/bling`](https://github.com/ublue-os/bling), if you wish to disable that, you need to just remove the line that includes bling.just.
-
-See [the just-page in the Universal Blue documentation](https://universal-blue.org/guide/just/) for more information.
+- Universal Blue [documentation](https://universal-blue.org/tinker/make-your-own/)
 
 [startingpoint]: https://github.com/ublue-os/startingpoint
 [build]: https://github.com/extrange/startingpoint/actions/workflows/build.yml/badge.svg
 [build-yml]: https://github.com/extrange/startingpoint/actions/workflows/build.yml
 [Github Actions]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions
 [Fedora Silverblue]: https://fedoraproject.org/silverblue/
-[`ublue-os/main`]: https://universal-blue.org/images/main/#features
 [codec support]: https://docs.fedoraproject.org/en-US/fedora-silverblue/faq/#_how_can_i_play_more_videos_in_firefox_like_youtube
 [additional packages]: https://github.com/ublue-os/main/blob/main/packages.json
 [post]: https://www.ypsidanger.com/building-your-own-fedora-silverblue-image/
