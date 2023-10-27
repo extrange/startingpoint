@@ -1,3 +1,4 @@
 docker:
   ghcr.io/extrange:
-    use-sigstore-attachments: true
+    use-sigstore-attachments: true # allows read/write of sigstore image attachments
+    # see https://github.com/containers/image/blob/main/docs/containers-registries.d.5.md

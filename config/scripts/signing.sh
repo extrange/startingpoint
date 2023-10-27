@@ -27,6 +27,3 @@ yq -i -o=j '.transports.docker |=
 
 IMAGE_REF="ostree-image-signed:docker://$IMAGE_REGISTRY/$IMAGE_NAME"
 printf '{\n"image-ref": "'"$IMAGE_REF"'",\n"image-tag": "latest"\n}' > /usr/share/ublue-os/image-info.json
-
-# Enable use-sigstore-attachments on image
-cp /usr/etc/containers/registries.d/startingpoint.yaml /usr/etc/containers/registries.d/"$IMAGE_NAME".yaml
