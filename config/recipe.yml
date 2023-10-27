@@ -1,7 +1,7 @@
 # image will be published to ghcr.io/<user>/<name>
 name: startingpoint
 # description will be included in the image's metadata
-description: A starting point for further customization of uBlue images. Make your own! https://ublue.it/making-your-own/
+description: My custom OS, based off uBlue.
 
 # the base image to build on top of (FROM) and the version tag to use
 base-image: quay.io/fedora-ostree-desktops/silverblue
@@ -19,7 +19,7 @@ modules:
           #
           # configuration you wish to end up in /etc/ on the booted system
           # should be added into /usr/etc/ as that is the proper "distro"
-          # config directory on ostree. Read more in the files module's README
+          # config directory on ostree. 
 
   - type: rpm-ostree
     repos:
