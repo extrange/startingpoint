@@ -1,0 +1,3 @@
+docker:
+  ghcr.io/extrange:
+    use-sigstore-attachments: true
