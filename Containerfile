@@ -10,7 +10,7 @@
 
 # !! Warning: changing these might not do anything for you. Read comment above.
 ARG IMAGE_MAJOR_VERSION=38
-ARG BASE_IMAGE_URL=ghcr.io/ublue-os/silverblue-main
+ARG BASE_IMAGE_URL=quay.io/fedora-ostree-desktops/silverblue
 
 FROM ${BASE_IMAGE_URL}:${IMAGE_MAJOR_VERSION}
 
@@ -18,9 +18,9 @@ FROM ${BASE_IMAGE_URL}:${IMAGE_MAJOR_VERSION}
 # so that `podman build` should just work for most people.
 ARG RECIPE=recipe.yml 
 # The default image registry to write to policy.json and cosign.yaml
-ARG IMAGE_REGISTRY=ghcr.io/ublue-os
+ARG IMAGE_REGISTRY=ghcr.io/extrange
 
-
+# Used by signing.sh
 COPY cosign.pub /usr/share/ublue-os/cosign.pub
 
 # Copy the bling from ublue-os/bling into tmp, to be installed later by the bling module
