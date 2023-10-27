@@ -19,7 +19,7 @@ modules:
           #
           # configuration you wish to end up in /etc/ on the booted system
           # should be added into /usr/etc/ as that is the proper "distro"
-          # config directory on ostree. 
+          # config directory on ostree.
 
   - type: rpm-ostree
     repos:
@@ -52,6 +52,5 @@ modules:
   - type: script
     scripts:
       - signing.sh # create policy.json, used by container signing 
-      # https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md
       - starship.sh # starship.rs shell prompt
       - rpm-ostree-update.sh # automatic updates
