@@ -27,10 +27,12 @@ modules:
       # TODO remove
       - https://copr.fedorainfracloud.org/coprs/alternateved/keyd/repo/fedora-%OS_VERSION%/alternateved-keyd-fedora-%OS_VERSION%.repo
     install:
-      - tailscale
-      - gnome-tweaks
-      - syncthing
+      - distrobox # alt. to toolbox, see https://github.com/89luca89/distrobox
+      - gnome-tweaks # for remapping capslock to backspace
       - keyd # Key remapping daemon
+      - sshfs
+      - syncthing
+      - tailscale
     remove:
       - firefox # default firefox removed in favor of flatpak
       - firefox-langpacks # langpacks needs to also be removed to prevent dependency problems
@@ -47,7 +49,7 @@ modules:
   #     - devpod # https://devpod.sh/ as an rpm
 
   - type: yafti
-  # flatpaks are directly specified in yafti.yml
+  # see config/files/usr/share/ublue-os/firstboot/yafti.yml
 
   - type: script
     scripts:
