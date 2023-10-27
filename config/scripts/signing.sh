@@ -9,7 +9,7 @@ PKI_DIR=/usr/etc/pki/containers/
 mkdir -p $PKI_DIR
 cp /usr/share/ublue-os/cosign.pub "$PKI_DIR$IMAGE_NAME".pub
 
-FILE=/usr/etc/containers/policy.json
+POLICY_JSON=/etc/containers/policy.json
 
 yq -i -o=j '.transports.docker |=
     {"'"$IMAGE_REGISTRY"'/'"$IMAGE_NAME"'": [
@@ -22,7 +22,7 @@ yq -i -o=j '.transports.docker |=
             }
         ]
     }
-+ .' "$FILE"
++ .' "$POLICY_JSON"
 
 IMAGE_REF="ostree-image-signed:docker://$IMAGE_REGISTRY/$IMAGE_NAME"
 printf '{\n"image-ref": "'"$IMAGE_REF"'",\n"image-tag": "latest"\n}' > /usr/share/ublue-os/image-info.json
