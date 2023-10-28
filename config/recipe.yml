@@ -20,7 +20,6 @@ modules:
       # should be added into /usr/etc/ as that is the proper "distro"
       # config directory on ostree.
       - usr: /usr
-      - home: /var/home
 
   - type: rpm-ostree
     repos:
