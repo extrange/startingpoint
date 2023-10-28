@@ -3,7 +3,6 @@
 # The builds can also be triggered manually in the Actions tab thanks to workflow dispatch.
 # Only the branch called `live` is published.
 
-
 name: build
 on: # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
   schedule:
@@ -20,7 +19,7 @@ on: # https://docs.github.com/en/actions/using-workflows/events-that-trigger-wor
 
 env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
-  TZ: 'Asia/Singapore'
+  TZ: "Asia/Singapore"
 
 # Only deploys the branch named "live". Ignores all other branches, to allow
 # having "development" branches without interfering with GHCR image uploads.
@@ -36,33 +35,31 @@ jobs:
       fail-fast: false
 
       matrix:
-# !!!
+        # !!!
         # Add recipes for all the images you want to build here.
         # Don't add module configuration files, you will get errors.
         recipe:
           - recipe.yml
-# !!!
+    # !!!
 
     steps:
       - name: Maximize build space
         uses: AdityaGarg8/remove-unwanted-software@v1
         with:
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
+          remove-dotnet: "true"
+          remove-android: "true"
+          remove-haskell: "true"
 
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Add yq (for reading recipe.yml)
-        uses: mikefarah/yq@v4.35.1
+      - uses: actions/checkout@v4
 
       - name: Gather image data from recipe
-        run: |
-          echo "IMAGE_NAME=$(yq '.name' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
-          echo "IMAGE_DESCRIPTION=$(yq '.description' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
-          echo "IMAGE_MAJOR_VERSION=$(yq '.image-version' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
-          echo "BASE_IMAGE_URL=$(yq '.base-image' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
+        uses: mikefarah/yq@master
+        with:
+          cmd: |
+            echo "IMAGE_NAME=$(yq '.name' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
+            echo "IMAGE_DESCRIPTION=$(yq '.description' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
+            echo "IMAGE_MAJOR_VERSION=$(yq '.image-version' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
+            echo "BASE_IMAGE_URL=$(yq '.base-image' ./config/${{ matrix.recipe }})" >> $GITHUB_ENV
 
       - name: Get current version
         id: labels
@@ -181,8 +178,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Sign container
-      - uses: sigstore/cosign-installer@v3.1.2
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.1.2
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/live'
 
       - name: Sign container image
