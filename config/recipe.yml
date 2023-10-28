@@ -12,14 +12,15 @@ image-version: 38 # quay.io follows fedora, and doesn't have the latest tag
 modules:
   - type: files
     files:
-      - usr:
-          /usr # copy static configurations
-          #
-          # copies config/files/usr into your image's /usr
-          #
-          # configuration you wish to end up in /etc/ on the booted system
-          # should be added into /usr/etc/ as that is the proper "distro"
-          # config directory on ostree.
+      # copy static configurations
+      #
+      # copies config/files/usr into your image's /usr
+      #
+      # configuration you wish to end up in /etc/ on the booted system
+      # should be added into /usr/etc/ as that is the proper "distro"
+      # config directory on ostree.
+      - usr: /usr
+      - home: /var/home
 
   - type: rpm-ostree
     repos:
@@ -28,14 +29,30 @@ modules:
       - https://copr.fedorainfracloud.org/coprs/alternateved/keyd/repo/fedora-%OS_VERSION%/alternateved-keyd-fedora-%OS_VERSION%.repo
     install:
       - distrobox # alt. to toolbox, see https://github.com/89luca89/distrobox
+      - ffmpeg
+      - fzf
       - gnome-tweaks # for remapping capslock to backspace
+      - heif-pixbuf-loader # heic support for Nautilus
       - keyd # Key remapping daemon
+      - nvtop # AMD/Nvidia gpu monitor
+      - smartmontools
       - sshfs
       - syncthing
       - tailscale
+      - traceroute
+      - vim
+      - zstd # better compression than DEFLATE
     remove:
       - firefox # default firefox removed in favor of flatpak
       - firefox-langpacks # langpacks needs to also be removed to prevent dependency problems
+      # The following cause problems when installing ffmpeg:
+      - libavcodec-free
+      - libavfilter-free    
+      - libavformat-free    
+      - libavutil-free      
+      - libpostproc-free    
+      - libswresample-free  
+      - libswscale-free     
   
   - type: fonts
     fonts:
@@ -53,6 +70,8 @@ modules:
 
   - type: script
     scripts:
+      - gsettings.sh # set custom GNOME settings
       - signing.sh # create policy.json, used by container signing 
       - starship.sh # starship.rs shell prompt
       - rpm-ostree-update.sh # automatic updates
+      - flatpak-updates.sh # flatpak automatic update timer
