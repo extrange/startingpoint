@@ -71,7 +71,6 @@ modules:
   - type: script
     scripts:
       - flatpak-updates.sh
-      - gsettings.sh
       - rpm-ostree-update.sh
       - signing.sh
       - starship.sh
