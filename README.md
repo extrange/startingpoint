@@ -1,14 +1,56 @@
-# My OS in a container
-
-Custom OS with personalization, based off [Fedora Silverblue], an immutable variant of Fedora. Uses [Universal Blue's `startingpoint`][startingpoint] repository template. Written in OCI
-
-Inspired by this [post].
+# My customized, immutable OS in a container
 
 [![build]][build-yml]
 
-The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is then pulled automatically by all my machines using this OS.
+ Also see my custom [distrobox].
 
-## Changes from Stock
+Based off [Fedora Silverblue], an immutable variant of Fedora. Uses [Universal Blue's `startingpoint`][startingpoint] repository template.
+
+Configure your OS in configuration files like this:
+
+```yaml
+# Install flatpaks
+description: Additional applications I use
+packages:
+  - Calibre: com.calibre_ebook.calibre
+  - Jellyfin: com.github.iwalton3.jellyfin-media-player
+  - LibreOffice: org.libreoffice.LibreOffice
+  - Moonlight: com.moonlight_stream.Moonlight
+  - OBS Studio: com.obsproject.Studio
+  - Obsidian: md.obsidian.Obsidian
+  - Scrcpy: in.srev.guiscrcpy
+  - Telegram: org.telegram.desktop
+  - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
+  - VLC: org.videolan.VLC
+  - Zoom: flathub us.zoom.Zoom
+```
+
+```yaml
+# Run arbitrary scripts
+- type: script
+  scripts:
+    - flatpak-updates.sh
+    - install-gext.sh
+    - rpm-ostree-update.sh
+    - signing.sh
+    - starship.sh
+    - vim-default-editor.sh
+```
+
+```dockerfile
+# Run Dockerfile commands
+
+COPY build.sh /tmp/build.sh
+COPY config /tmp/config/
+RUN rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+```
+Automatically rebuilt daily, thanks to [Github Actions].
+
+Pulled regularly to all my machines (via `systemd` timers).
+
+Inspired by this [post].
+
+## Features
 
 - Automatic flatpak/OS updates (when on AC power and unmetered connection)
 - Additional flatpaks: Jellyfin, Moonlight, Telegram (see full [list][yafti])
@@ -96,10 +138,6 @@ The Action uses [isogenerator](https://github.com/ublue-os/isogenerator) and wor
 - During container builds (e.g. in a `Containerfile`), it's good practice to do [`ostree container commit`] after each `RUN` instruction.
 - `/etc/containers/policy.json` sets the system policy for [container signature verification].
 
-## References
-
-- Universal Blue [documentation](https://universal-blue.org/tinker/make-your-own/)
-
 [startingpoint]: https://github.com/ublue-os/startingpoint
 [build]: https://github.com/extrange/startingpoint/actions/workflows/build.yml/badge.svg
 [build-yml]: https://github.com/extrange/startingpoint/actions/workflows/build.yml
@@ -117,3 +155,4 @@ The Action uses [isogenerator](https://github.com/ublue-os/isogenerator) and wor
 [3-way merge]: https://ostreedev.github.io/ostree/atomic-upgrades/#assembling-a-new-deployment-directory
 [`ostree container commit`]: https://coreos.github.io/rpm-ostree/container/#using-ostree-container-commit
 [container signature verification]: https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#policy-requirements
+[distrobox]: https://github.com/extrange/my-distrobox
