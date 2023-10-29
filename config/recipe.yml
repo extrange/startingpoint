@@ -70,6 +70,7 @@ modules:
 
   - type: script
     scripts:
+      - gsettings.sh
       - flatpak-updates.sh
       - rpm-ostree-update.sh
       - signing.sh
