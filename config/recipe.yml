@@ -27,6 +27,7 @@ modules:
       # TODO remove
       - https://copr.fedorainfracloud.org/coprs/alternateved/keyd/repo/fedora-%OS_VERSION%/alternateved-keyd-fedora-%OS_VERSION%.repo
     install:
+      - bat
       - distrobox # alt. to toolbox, see https://github.com/89luca89/distrobox
       - ffmpeg
       - fzf
@@ -69,8 +70,9 @@ modules:
 
   - type: script
     scripts:
-      - gsettings.sh # set custom GNOME settings
-      - signing.sh # create policy.json, used by container signing 
-      - starship.sh # starship.rs shell prompt
-      - rpm-ostree-update.sh # automatic updates
-      - flatpak-updates.sh # flatpak automatic update timer
+      - flatpak-updates.sh
+      - gsettings.sh
+      - rpm-ostree-update.sh
+      - signing.sh
+      - starship.sh
+      - vim-default-editor.sh
