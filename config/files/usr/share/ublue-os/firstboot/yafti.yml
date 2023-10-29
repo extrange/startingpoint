@@ -55,7 +55,6 @@ screens:
     source: yafti.screen.consent
     values:
       title: Configure GNOME settings
-      show_terminal: true
       description: |
         Next, we'll configure the following GNOME settings:
 
@@ -72,7 +71,23 @@ screens:
         - run: dconf write /org/gnome/desktop/wm/keybindings/switch-windows "['<alt>Tab']"
         - run: gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/custom/background.jpg"
   
-  # install-gnome-extensions:
+  install-gnome-extensions:
+    source: yafti.screen.consent
+    values:
+      title: Install GNOME extensions
+      show_terminal: true
+      description: |
+        We will now install the following GNOME extensions:
+
+        - Clipboard Indicator
+        - Fullscreen Avoider
+        - GSConnect
+        - Tailscale Status
+        - Vitals
+      actions:
+        - run: gext install tailscale-status@maxgallup.github.com
+        - run: gext install clipboard-indicator@tudmotu.com
+        # - run: gext install 
 
 
   applications:

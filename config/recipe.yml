@@ -64,7 +64,8 @@ modules:
   #     - devpod # https://devpod.sh/ as an rpm
 
   - type: yafti
-  # Configures flatpaks, repos, gnome settings and extensions
+  # Configures flatpaks, repos, gnome settings and extensions,
+  # which can only be done in a running container.
   # see config/files/usr/share/ublue-os/firstboot/yafti.yml
 
   - type: script

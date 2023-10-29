@@ -60,15 +60,6 @@ You will need to configure:
 
 Finally, don't forget to copy over the configuration files you backed up previously.
 
-**Recommended GNOME Extensions**
-
-- gsconnect
-- clipboard history
-- fullscreen avoider
-- vitals
-- tailscale status
-
-
 ## Notes
 
 The `template` branch tracks that of the upstream [`startingpoint`][startingpoint] repo. The `live` branch is used for actual deployment.
