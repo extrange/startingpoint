@@ -85,10 +85,11 @@ screens:
         - Tailscale Status
         - Vitals
       actions:
-        - run: gext install tailscale-status@maxgallup.github.com
         - run: gext install clipboard-indicator@tudmotu.com
-        # - run: gext install 
-
+        - run: gext install fullscreen-avoider@noobsai.github.com
+        - run: gext install gsconnect@andyholmes.github.io
+        - run: gext install tailscale-status@maxgallup.github.com
+        - run: gext install Vitals@CoreCoding.com
 
   applications:
     source: yafti.screen.package
@@ -138,16 +139,16 @@ screens:
           default: True
           packages:
             - Calibre: com.calibre_ebook.calibre
+            - Jellyfin: com.github.iwalton3.jellyfin-media-player
             - LibreOffice: org.libreoffice.LibreOffice
+            - Moonlight: com.moonlight_stream.Moonlight
+            - OBS Studio: com.obsproject.Studio
             - Obsidian: md.obsidian.Obsidian
             - Scrcpy: in.srev.guiscrcpy
             - Telegram: org.telegram.desktop
+            - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
             - VLC: org.videolan.VLC
             - Zoom: flathub us.zoom.Zoom
-            - OBS Studio: com.obsproject.Studio
-            - Jellyfin: com.github.iwalton3.jellyfin-media-player
-            - Moonlight: com.moonlight_stream.Moonlight
-            - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
 
         Gaming:
           description: "Rock and Stone!"
@@ -175,4 +176,4 @@ screens:
         - "Join the Discord Community":
             run: /usr/bin/xdg-open https://discord.gg/XjG48C7VHx
       description: |
-        Thanks for trying uBlue, we hope you enjoy it!
+        Start using your new OS!

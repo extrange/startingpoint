@@ -55,7 +55,7 @@ modules:
   - type: fonts
     fonts:
       nerd-fonts:
-        - JetBrainsMono
+        - JetBrainsMono # Used for starship.rs
 
   # - type: bling # configure what to pull in from ublue-os/bling
   #   install:
@@ -63,15 +63,16 @@ modules:
   #     - dconf-update-service # a service unit that updates the dconf db on boot
   #     - devpod # https://devpod.sh/ as an rpm
 
-  - type: yafti
-  # Configures flatpaks, repos, gnome settings and extensions,
-  # which can only be done in a running container.
-  # see config/files/usr/share/ublue-os/firstboot/yafti.yml
-
   - type: script
     scripts:
       - flatpak-updates.sh
+      - install-gext.sh # Required in yafti, for installing GNOME extentions
       - rpm-ostree-update.sh
       - signing.sh
       - starship.sh
       - vim-default-editor.sh
+
+  - type: yafti
+  # Configures flatpaks, repos, gnome settings and extensions,
+  # which can only be done in a running container.
+  # see config/files/usr/share/ublue-os/firstboot/yafti.yml

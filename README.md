@@ -8,13 +8,15 @@ Inspired by this [post].
 
 The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is then pulled automatically by all my machines using this OS.
 
-**Changes from stock Fedora Silverblue**
+## Changes from Stock
 
-- `systemd` timers for automatic Flatpak and `rpm-ostree` updates
-- removes the default Firefox package (Flatpak Firefox has better [codec support])
-- layers [additional packages] e.g. `ffmpeg`, `libheif-tools`, `fzf`, `distrobox`, `vim`, `tmux`
-
-The main files which are not changed from upstream `startingpoint` are `build.sh`.
+- Automatic flatpak/OS updates (when on AC power and unmetered connection)
+- Additional flatpaks: Jellyfin, Moonlight, Telegram (see full [list][yafti])
+- Additional packages: `ffmpeg`, `libheif-tools`, `distrobox`, `tailscale`, `vim` (see full [list][packages])
+- Replace system Firefox with flatpak version (Flatpak Firefox has better [codec support])
+- Custom GNOME settings ([list][yafti])
+- GNOME extensions: GSConnect, Clipboard Indicator ([list][yafti])
+- [Starship.rs] shell prompt
 
 ## Installation
 
@@ -88,8 +90,8 @@ Note that this release-iso action is not a replacement for a full-blown release 
 
 ## Technical
 
-- Only /var is preserved across updates. /sysroot is a bind mount to the real root directory.
-- Packages installed with rpm-ostree are automatically kept up to date
+- Only `/var` is preserved across updates. `/sysroot` is a bind mount to the real root directory.
+- Packages installed with `rpm-ostree` are automatically kept up to date
 - layered packages are kept after a rebase
 
 policy JSON, container signing, what ostree container commit does, ostree-unverified-registry , filesystem layout model - https://coreos.github.io/rpm-ostree/container/
@@ -106,5 +108,7 @@ https://ostreedev.github.io/ostree/adapting-existing/, https://ostreedev.github.
 [Github Actions]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions
 [Fedora Silverblue]: https://fedoraproject.org/silverblue/
 [codec support]: https://docs.fedoraproject.org/en-US/fedora-silverblue/faq/#_how_can_i_play_more_videos_in_firefox_like_youtube
-[additional packages]: https://github.com/ublue-os/main/blob/main/packages.json
 [post]: https://www.ypsidanger.com/building-your-own-fedora-silverblue-image/
+[yafti]: config/files/usr/share/ublue-os/firstboot/yafti.yml
+[packages]: config/recipe.yml
+[Starship.rs]: https://starship.rs/
