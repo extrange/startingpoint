@@ -148,6 +148,7 @@ screens:
             - Telegram: org.telegram.desktop
             - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
             - VLC: org.videolan.VLC
+            - VSCode: com.visualstudio.code
             - Zoom: flathub us.zoom.Zoom
 
         Gaming:

@@ -30,8 +30,10 @@ modules:
       - distrobox # alt. to toolbox, see https://github.com/89luca89/distrobox
       - ffmpeg
       - gnome-tweaks  # mini dconf editor
+      - libheif-tools
       - heif-pixbuf-loader # heic support for Nautilus
       - keyd # Key remapping daemon
+      - openssl # required by GSConnect..
       - nvtop # AMD/Nvidia gpu monitor
       - smartmontools
       - sshfs
