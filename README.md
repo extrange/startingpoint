@@ -29,9 +29,9 @@ The OS image is automatically rebuilt daily, thanks to [Github Actions]. It is t
 > - `/etc/fstab`
 > - Syncthing `.config`
 
-**Install**
+You will need to begin with an existing [Fedora Silverblue] installation.
 
-To rebase an existing Silverblue/Kinoite installation to the latest build:
+Next, rebase an installation to this OS:
 
 ```bash
 # Remove all layered packages to prevent any conflicts
@@ -86,17 +86,15 @@ To run the action, simply edit the `boot_menu.yml` by changing all the reference
 
 The Action uses [isogenerator](https://github.com/ublue-os/isogenerator) and works in a similar manner to the official Universal Blue ISO. If you have any issues, you should first check [the documentation page on installation](https://universal-blue.org/installation/). The ISO is a netinstaller and should always pull the latest version of your image.
 
-Note that this release-iso action is not a replacement for a full-blown release automation like [release-please](https://github.com/googleapis/release-please).
-
 ## Technical
 
-- Only `/var` is preserved across updates. `/sysroot` is a bind mount to the real root directory.
-- Packages installed with `rpm-ostree` are automatically kept up to date
-- layered packages are kept after a rebase
-
-policy JSON, container signing, what ostree container commit does, ostree-unverified-registry , filesystem layout model - https://coreos.github.io/rpm-ostree/container/
-
-https://ostreedev.github.io/ostree/adapting-existing/, https://ostreedev.github.io/ostree/atomic-upgrades/ - /usr/etc stuff, 3 way merge
+- `/usr` is readonly at runtime. `/etc` is meant for mutable machine-local files, and `/var` holds all other state (and is also preserved across updates). [More info][filesystem-layout]
+- On the booted deployment, [`/sysroot` is a bind mount to the physical `/` root directory][sysroot]
+- Packages layered with `rpm-ostree install` are automatically kept [up to date], and are kept after a rebase.
+- For more information about the URL formats (e.g. `ostree-unverified-registry:<oci image>`), see [here][url-format]
+- On an upgrade of a deployment, a [3-way merge] is performed between the currently booted deployment's `/etc`, the default configuration (as in `/usr/etc`), and the new deployment's `/usr/etc`.
+- During container builds (e.g. in a `Containerfile`), it's good practice to do [`ostree container commit`] after each `RUN` instruction.
+- `/etc/containers/policy.json` sets the system policy for [container signature verification].
 
 ## References
 
@@ -112,3 +110,10 @@ https://ostreedev.github.io/ostree/adapting-existing/, https://ostreedev.github.
 [yafti]: config/files/usr/share/ublue-os/firstboot/yafti.yml
 [packages]: config/recipe.yml
 [Starship.rs]: https://starship.rs/
+[url-format]: https://coreos.github.io/rpm-ostree/container/#url-format-for-ostree-native-containers
+[filesystem-layout]: https://coreos.github.io/rpm-ostree/container/#filesystem-layout-model
+[sysroot]: https://ostreedev.github.io/ostree/adapting-existing/#system-layout
+[up to date]: https://docs.fedoraproject.org/en-US/iot/update-applications/#_updating_layered_packages
+[3-way merge]: https://ostreedev.github.io/ostree/atomic-upgrades/#assembling-a-new-deployment-directory
+[`ostree container commit`]: https://coreos.github.io/rpm-ostree/container/#using-ostree-container-commit
+[container signature verification]: https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#policy-requirements
