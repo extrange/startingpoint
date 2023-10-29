@@ -27,11 +27,9 @@ modules:
       # TODO remove
       - https://copr.fedorainfracloud.org/coprs/alternateved/keyd/repo/fedora-%OS_VERSION%/alternateved-keyd-fedora-%OS_VERSION%.repo
     install:
-      - bat
       - distrobox # alt. to toolbox, see https://github.com/89luca89/distrobox
       - ffmpeg
-      - fzf
-      - gnome-tweaks # for remapping capslock to backspace
+      - gnome-tweaks  # mini dconf editor
       - heif-pixbuf-loader # heic support for Nautilus
       - keyd # Key remapping daemon
       - nvtop # AMD/Nvidia gpu monitor
@@ -66,11 +64,11 @@ modules:
   #     - devpod # https://devpod.sh/ as an rpm
 
   - type: yafti
+  # Configures flatpaks, repos, gnome settings and extensions
   # see config/files/usr/share/ublue-os/firstboot/yafti.yml
 
   - type: script
     scripts:
-      - gsettings.sh
       - flatpak-updates.sh
       - rpm-ostree-update.sh
       - signing.sh

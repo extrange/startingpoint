@@ -1,6 +1,6 @@
 title: Welcome
 properties:
-  mode: "run-on-change"
+  mode: "run-on-change" # Will run whenever this config changes
 screens:
   first-screen:
     source: yafti.screen.title
@@ -9,6 +9,7 @@ screens:
       icon: "/path/to/icon"
       description: |
         This guided installer will help you get started with your new system.
+
   can-we-modify-your-flatpaks:
     source: yafti.screen.consent
     values:
@@ -27,6 +28,7 @@ screens:
         - run: flatpak remove --system --noninteractive --all
         - run: flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo
         - run: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+
   check-system-flathub:
     source: yafti.screen.consent
     values:
@@ -37,6 +39,7 @@ screens:
         We have detected that you don't have Flathub's repository on your system. We will now add that repository to your system-wide list.
       actions:
         - run: flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo
+
   check-user-flathub:
     source: yafti.screen.consent
     values:
@@ -47,6 +50,31 @@ screens:
         We have detected that you don't have Flathub's repository on your current user account. We will now add that repository to your account.
       actions:
         - run: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+
+  configure-gnome-settings:
+    source: yafti.screen.consent
+    values:
+      title: Configure GNOME settings
+      show_terminal: true
+      description: |
+        Next, we'll configure the following GNOME settings:
+
+        - Turn on Night Light
+        - Switch to Dark Mode
+        - Remap Capslock to Backspace
+        - Set Alt-Tab to switch between windows, instead of applications
+        - Set custom background
+      actions:
+        - run: gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+        - run: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+        - run: dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:backspace']"
+        - run: dconf write /org/gnome/desktop/wm/keybindings/switch-applications "@as []"
+        - run: dconf write /org/gnome/desktop/wm/keybindings/switch-windows "['<alt>Tab']"
+        - run: gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/custom/background.jpg"
+  
+  # install-gnome-extensions:
+
+
   applications:
     source: yafti.screen.package
     values:
