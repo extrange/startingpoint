@@ -63,6 +63,7 @@ screens:
         - Remap Capslock to Backspace
         - Set Alt-Tab to switch between windows, instead of applications
         - Set custom background
+        - Set Ctrl-Alt-T to launch 'distrobox enter main'
       actions:
         - run: gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
         - run: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
@@ -70,7 +71,23 @@ screens:
         - run: dconf write /org/gnome/desktop/wm/keybindings/switch-applications "@as []"
         - run: dconf write /org/gnome/desktop/wm/keybindings/switch-windows "['<alt>Tab']"
         - run: gsettings set org.gnome.desktop.background picture-uri-dark "file:///usr/share/backgrounds/custom/background.jpg"
-  
+
+        # Bind ctrl-alt-t to launch 'distrobox enter main'
+        - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding '<Control><Alt>t'
+        - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command 'gnome-terminal -- distrobox enter main'
+        - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name 'distrobox'
+        - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+
+  setup-distrobox:
+    source: yafti.screen.consent
+    values:
+      title: Setup Distrobox
+      condition:
+        run: distrobox ls | awk -F '|' '{if (NR!=1) print $2}' | grep -E '\bmain\b'
+      description: We will now setup and install a custom Distrox container.
+      actions:
+        - run: distrobox create -n main --image ghcr.io/extrange/my-distrobox
+
   install-gnome-extensions:
     source: yafti.screen.consent
     values:
@@ -129,7 +146,6 @@ screens:
           description: System applications for all desktop environments.
           default: true
           packages:
-            - Deja Dup Backups: org.gnome.DejaDup
             - Fedora Media Writer: org.fedoraproject.MediaWriter
             - Flatseal (Permission Manager): com.github.tchx84.Flatseal
             - Font Downloader: org.gustavoperedo.FontDownloader

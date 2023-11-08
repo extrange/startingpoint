@@ -58,7 +58,13 @@ Inspired by this [post].
 - Replace system Firefox with flatpak version (Flatpak Firefox has better [codec support])
 - Custom GNOME settings ([list][yafti])
 - GNOME extensions: GSConnect, Clipboard Indicator ([list][yafti])
+- GNOME apps as Flathub flatpaks (see official list of GNOME apps [here][gnome-apps])
 - [Starship.rs] shell prompt
+
+**TODO**
+
+- `keyd`: build my own rpm in another container (don't use copr)
+- Virtualization (libvirtd, virt-manager etc) - test using toolbox? [Guide]
 
 ## Installation
 
@@ -101,6 +107,8 @@ You will need to configure:
 - `syncthing` is installed but not enable by default. To enable:
 
   - `systemctl --user enable syncthing.service`
+
+- hostname via `hostnamectl hostname <NAME>` (this affects the device name in Tailscale/Syncthing/Firefox Sync)
 
 Finally, don't forget to copy over the configuration files you backed up previously.
 
@@ -156,3 +164,5 @@ The Action uses [isogenerator](https://github.com/ublue-os/isogenerator) and wor
 [`ostree container commit`]: https://coreos.github.io/rpm-ostree/container/#using-ostree-container-commit
 [container signature verification]: https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#policy-requirements
 [distrobox]: https://github.com/extrange/my-distrobox
+[gnome-apps]: https://apps.gnome.org/
+[Guide]: https://github.com/89luca89/distrobox/blob/main/docs/posts/run_libvirt_in_distrobox.md
