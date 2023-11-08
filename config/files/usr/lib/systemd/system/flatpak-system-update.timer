@@ -1,7 +1,6 @@
 [Unit]
 Description=Flatpak Automatic Update Trigger
 Documentation=man:flatpak(1)
-ConditionACPower=true
 
 [Timer]
 RandomizedDelaySec=10m
