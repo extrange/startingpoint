@@ -155,6 +155,7 @@ screens:
           default: True
           packages:
             - Calibre: com.calibre_ebook.calibre
+            - GIMP: org.gimp.GIMP
             - Jellyfin: com.github.iwalton3.jellyfin-media-player
             - LibreOffice: org.libreoffice.LibreOffice
             - Moonlight: com.moonlight_stream.Moonlight
