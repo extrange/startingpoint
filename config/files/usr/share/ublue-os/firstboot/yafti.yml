@@ -97,12 +97,14 @@ screens:
         We will now install the following GNOME extensions:
 
         - Clipboard Indicator
+        - Dash to Dock
         - Fullscreen Avoider
         - GSConnect
         - Tailscale Status
         - Vitals
       actions:
         - run: gext install clipboard-indicator@tudmotu.com
+        - run: gext install dash-to-dock@micxgx.gmail.com
         - run: gext install fullscreen-avoider@noobsai.github.com
         - run: gext install gsconnect@andyholmes.github.io
         - run: gext install tailscale-status@maxgallup.github.com
@@ -128,6 +130,7 @@ screens:
             - Characters: org.gnome.Characters
             - Clocks: org.gnome.clocks
             - Connections: org.gnome.Connections
+            - Console: org.gnome.Console
             - Contacts: org.gnome.Contacts
             - Disk Usage Analyzer: org.gnome.baobab
             - Document Scanner: org.gnome.SimpleScan
