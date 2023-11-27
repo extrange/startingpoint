@@ -74,7 +74,7 @@ screens:
 
         # Bind ctrl-alt-t to launch 'distrobox enter main'
         - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding '<Control><Alt>t'
-        - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command 'gnome-terminal -- distrobox enter main'
+        - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command 'kgx -- distrobox enter main'
         - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name 'distrobox'
         - run: dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
 
@@ -130,7 +130,6 @@ screens:
             - Characters: org.gnome.Characters
             - Clocks: org.gnome.clocks
             - Connections: org.gnome.Connections
-            - Console: org.gnome.Console
             - Contacts: org.gnome.Contacts
             - Disk Usage Analyzer: org.gnome.baobab
             - Document Scanner: org.gnome.SimpleScan

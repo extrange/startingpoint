@@ -30,6 +30,7 @@ modules:
       - distrobox # alt. to toolbox, see https://github.com/89luca89/distrobox
       - ffmpeg
       - gnome-tweaks  # mini dconf editor
+      - gnome-console
       - libheif-tools
       - heif-pixbuf-loader # heic support for Nautilus
       - keyd # Key remapping daemon
@@ -42,6 +43,14 @@ modules:
       - traceroute
       - vim
       - zstd # better compression than DEFLATE
+
+      # dnf group info virtualization
+      - virt-install
+      - libvirt-daemon-config-network
+      - libvirt-daemon-kvm
+      - qemu-kvm
+      - virt-manager
+      - virt-viewer
     remove:
       - firefox # default firefox removed in favor of flatpak
       - firefox-langpacks # langpacks needs to also be removed to prevent dependency problems
