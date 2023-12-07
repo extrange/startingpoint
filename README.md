@@ -1,5 +1,7 @@
 # My customized, immutable OS in a container
 
+**Archived: I have moved to [NixOS]**
+
 [![build]][build-yml]
 
  Also see my custom [distrobox].
@@ -166,3 +168,4 @@ The Action uses [isogenerator](https://github.com/ublue-os/isogenerator) and wor
 [distrobox]: https://github.com/extrange/my-distrobox
 [gnome-apps]: https://apps.gnome.org/
 [Guide]: https://github.com/89luca89/distrobox/blob/main/docs/posts/run_libvirt_in_distrobox.md
+[NixOS]: https://github.com/extrange/nixos-config
